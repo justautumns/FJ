@@ -1,63 +1,109 @@
-#include <vector>
 #include <iostream>
+#include <vector>
 
-class PmergeMe {
-public:
-    static std::vector<std::vector<int>> denemeSort(std::vector<std::vector<int>>& temp);
-    static void displayPairs(const std::vector<std::vector<int>>& vec2D);
-};
-
-std::vector<std::vector<int>> PmergeMe::denemeSort(std::vector<std::vector<int>>& temp) {
-    std::vector<std::vector<int>> result;
-    if (temp.size() <= 1) {
-        return temp;
-    } else {
-        size_t mid = temp.size() / 2;
-        std::vector<std::vector<int>> firstHalf(temp.begin(), temp.begin() + mid);
-        std::vector<std::vector<int>> secondHalf(temp.begin() + mid, temp.end());
-
-        displayPairs(firstHalf);
-        displayPairs(secondHalf);
-
-        if (firstHalf.size() + secondHalf.size() == 4)
-        {
-            result.insert(result.end(), firstHalf.begin(), firstHalf.end());
-            result.insert(result.end(), secondHalf[1]);
-            return result;
-        }
-        // Recursive olarak bölme işlemi
-        std::vector<std::vector<int>> firstSplit = denemeSort(firstHalf);
-        std::vector<std::vector<int>> secondSplit = denemeSort(secondHalf);
-
-        std::cout << firstHalf.size() << std::endl;
-        std::cout << secondHalf.size() << std::endl;
-        // Sonuçları birleştir
-    }
-    return result;
+void displayArray(std::vector<int> &a)
+{
+	for (size_t i = 0; i < a.size(); i++)
+	{
+		std::cout << a[i] << " , ";
+	}
+	std::cout << std::endl;
 }
 
-void PmergeMe::displayPairs(const std::vector<std::vector<int>>& vec2D) {
-    for (const auto& vec : vec2D) {
-        for (int val : vec) {
-            std::cout << val << " ";
-        }
-        std::cout << std::endl;
+int eeeh(int n)
+{if (n == 0) return 0;
+    if (n == 1) return 1;
+
+    unsigned long long prev2 = 0, prev1 = 1, current;
+    for (int i = 2; i <= n; ++i) {
+        current = prev1 + (prev2 << 1);  // Use bitwise shift instead of multiplication by 2
+        prev2 = prev1;
+        prev1 = current;
     }
-    std::cout << "-----" << std::endl;
+    return prev1;
 }
 
-int main() {
-    std::vector<std::vector<int>> temp = {
-        {1, 2, 3},
-        {4, 5, 6},
-        {7, 8, 9},
-        {10, 11, 12}
-    };
 
-    std::vector<std::vector<int>> result = PmergeMe::denemeSort(temp);
+std::vector<int> generateJacobsthalSequence(int n) {
+    std::vector<int> jacobsthal;
+    if (n == 0) return jacobsthal;
+    jacobsthal.push_back(0);
+    if (n == 1) return jacobsthal;
+    jacobsthal.push_back(1);
+    
+    for (int i = 2; i < n; ++i) {
+        jacobsthal.push_back(jacobsthal[i - 1] + 2 * jacobsthal[i - 2]);
+    }
+    return jacobsthal;
+}
 
-    std::cout << "Sorted 2D vector:" << std::endl;
-    PmergeMe::displayPairs(result);
 
-    return 0;
+// std::vector<int> generateJacobInsertionSequence(std::vector<int> &k)
+// {
+// 	size_t size = k.size();
+// 	size_t jcobstalIndex;
+// 	int index = 3;
+// 	std::vector<int> temp;
+
+// 	while ((jcobstalIndex = eeeh(index)) < size)
+// 	{
+// 		temp.push_back(jcobstalIndex);
+// 		index++;
+// 	}
+// 	return temp;
+// }
+// std::vector<int> generatPositions(std::vector<int> &k)
+// {
+// 	if (k.empty())
+// 		throw std::runtime_error("the rest array is empty");
+//         std::vector<int> poses = generateJacobsthalSequence(k.size());
+//         displayArray(poses);
+//         std::vector<int> fnpos;
+//        size_t i = 3;
+//        int val = 0;
+
+//        while (i < poses.size())
+//        {
+//             fnpos.push_back(poses[i]);
+//             int value = poses[i] - 1; 
+//             fnpos.push_back(value);
+//             int pos = i - 1;
+//             while (value > poses[i - 3])
+//             {
+//                 if (value != poses[i - 2] || value != poses[i - 1])
+//                     fnpos.push_back(value);
+//                 value--;
+//             }
+//         i++;
+//        }
+//        return fnpos;
+// }
+
+
+// Pozisyonları üreten fonksiyon
+std::vector<int> generatePositions(std::vector<int> &k) {
+    if (k.empty())
+        throw std::runtime_error("the rest array is empty");
+
+    std::vector<int> poses = generateJacobsthalSequence(k.size());
+    std::vector<int> fnpos;
+
+    for (size_t i = 3; i < poses.size(); ++i) {
+        fnpos.push_back(poses[i]);
+        int value = poses[i] - 1;
+
+        // Önceki Jacobsthal değerine kadar ekle
+        int lower_bound = (i > 0) ? poses[i - 1] : 2;
+        while (value > lower_bound) {
+            fnpos.push_back(value);
+            value--;
+        }
+    }
+    return fnpos;
+}
+int main()
+{
+    std::vector<int> k = {5, 2, 3, 12, 15, 21 ,3, 23};
+    std::vector<int> jacobs = generatePositions(k);
+    displayArray(jacobs);
 }

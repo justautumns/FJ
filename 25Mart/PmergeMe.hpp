@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <mehmeyil@student.42vienna.com>   +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:16:03 by mehmeyil          #+#    #+#             */
-/*   Updated: 2025/03/25 00:36:56 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2025/03/25 22:51:30 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ class PmergeMe
 	int eeeh(int n);
 	std::vector<int> addPendtoMain(std::vector<int> &pend, std::vector<int> &main);
 	// ---------------------
-	std::vector<int> generateJacobInsertionSequence(std::vector<int> &k);
+	std::vector<int> generateJacobInsertionSequence(int n);
 	std::vector<int> generatPositions(std::vector<int> &k);
 	void swapPairs(std::vector<std::vector<int>> &k, int level);
 	std::vector<std::vector<int> > mergeInsert(std::vector<std::vector<int> > &temp);
