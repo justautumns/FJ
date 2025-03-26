@@ -6,7 +6,7 @@
 /*   By: mehmeyil <mehmeyil@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:16:03 by mehmeyil          #+#    #+#             */
-/*   Updated: 2025/03/26 04:27:01 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2025/03/26 05:11:44 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ class PmergeMe
 
 	//26 MART
 	std::vector<int> generateJacobInsertionSequence(std::vector<int> &pend);
+	std::vector<std::vector<int> > denemeSort2(std::vector<int> & temp);
 
 	
 };
