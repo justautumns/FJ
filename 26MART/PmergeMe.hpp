@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <mehmeyil@student.42vienna.com>   +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:16:03 by mehmeyil          #+#    #+#             */
-/*   Updated: 2025/03/26 05:11:44 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2025/03/26 21:36:41 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,13 @@ class PmergeMe
 	size_t binarySearch1(const std::vector<std::vector<int>> & arr, std::vector<int> value);
 	void Mergethem(std::vector<std::vector<int> > &first, std::vector<std::vector<int> > &second);
 
-
-
+	
+	
 	void sort();
 	void passArgs();
-
+	
 	//26 MART
+	std::vector<std::vector<std::vector<int> > > denemeSortPart3(std::vector<std::vector<std::vector<int> > >& temp);
 	std::vector<int> generateJacobInsertionSequence(std::vector<int> &pend);
 	std::vector<std::vector<int> > denemeSort2(std::vector<int> & temp);
 

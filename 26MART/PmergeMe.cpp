@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <mehmeyil@student.42vienna.com>   +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:25:09 by mehmeyil          #+#    #+#             */
-/*   Updated: 2025/03/26 15:45:52 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2025/03/26 21:49:51 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -359,6 +359,19 @@ void PmergeMe::denemeSortPart2(std::vector<std::vector<int> > &bakalim)
 	bakalim.clear();
 	bakalim = main;
 }
+// std::vector<std::vector<std::vector<int> > > PmergeMe::denemeSortPart3(std::vector<std::vector<std::vector<int> > >& temp)
+// {
+// 	std::vector<std::vector<std::vector<int> main;
+// 	std::vector<std::vector<std::vector<int> pend;
+
+// 	for (size_t i = 0; i < temp.size() - 1; i += 2)
+// 	{
+// 		main.push_back(temp[i]);
+// 		pend.push_back(temp[i + 1]);
+// 	}
+// 	if ()
+// }
+
 std::vector<std::vector<int> > PmergeMe::denemeSort(std::vector<std::vector<int> >& temp)
 {
 	std::cout << pairCount << std::endl;
@@ -384,9 +397,29 @@ std::vector<std::vector<int> > PmergeMe::denemeSort(std::vector<std::vector<int>
 	{
 		//displayPairs(geriKalan);
 		std::vector<std::vector<int> > z;
-		for (size_t i = 0; i < first.size(); i++)
+		// for (size_t i = 0; i < first.size(); i++)
+		// {
+		// 	z.push_back(geriKalan[i]);
+		// }
+		std::cout << "Ben ilk geri kalan : ";
+		displayPairs(geriKalan);
+		int i = 0;
+		while (i < first.size())
+		{
 			z.push_back(geriKalan[i]);
-		int t = binarySearch(a, geriKalan[0][0]);
+			i++;
+		}
+		std::vector<std::vector<int> > y;
+		for (int s = i; s < geriKalan.size(); s++)
+		{
+			y.push_back(geriKalan[s]);
+		}
+		geriKalan.clear();
+		geriKalan = y;
+		y.clear();
+		std::cout << "Geri kalan assadakiler : "; 
+		displayPairs(y);
+		int t = binarySearch(a, z[0][0]);
 		bakalim.insert(bakalim.begin() + t, z);
 		a.clear();
 		for (size_t i = 0; i < bakalim.size(); i++)
@@ -440,9 +473,9 @@ void PmergeMe::passArgs()
 	// }
 	std::vector<std::vector<int> > sorted;
 	sorted = denemeSort(Groups);
-	denemeSortPart2(sorted);
+	//denemeSortPart2(sorted);
 	//displayPairs(sorted);
-	sort(sorted);
+	//sort(sorted);
 	std::cout << "Final count of comparison : "<<this->counter << std::endl;
 }
 
