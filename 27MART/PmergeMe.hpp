@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:16:03 by mehmeyil          #+#    #+#             */
-/*   Updated: 2025/03/26 21:36:41 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2025/03/27 05:33:22 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,10 @@ class PmergeMe
 	std::vector<int> jacobSequence;
 	std::vector<int> positions;
 	std::vector<int> indexMapping;
+	std::vector<std::vector<int> > bakalimbakalim;
 
 
-
+	bool flag;
 	int level;
 	int counter;
 	int pairCount = 0;
@@ -87,6 +88,13 @@ class PmergeMe
 	std::vector<std::vector<std::vector<int> > > denemeSortPart3(std::vector<std::vector<std::vector<int> > >& temp);
 	std::vector<int> generateJacobInsertionSequence(std::vector<int> &pend);
 	std::vector<std::vector<int> > denemeSort2(std::vector<int> & temp);
+
+
+	//27 MART
+	std::vector<std::vector<int> > divideArray(std::vector<int> &m);
+	void splitAndUpdate(std::vector<std::vector<int>>& arr);
+
+
 
 	
 };
