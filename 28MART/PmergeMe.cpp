@@ -6,7 +6,7 @@
 /*   By: mehmeyil <mehmeyil@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:25:09 by mehmeyil          #+#    #+#             */
-/*   Updated: 2025/03/28 03:41:18 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2025/03/28 04:57:14 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,14 @@ size_t PmergeMe::binarySearch(const std::vector<int>& arr, int value)
 	size_t high = arr.size();
 	while (low < high) {
 		this->counter++;
+		this->level++;
 		size_t mid = low + (high - low) / 2;
 		if (arr[mid] < value) {
 			low = mid + 1;
 		} else {
 			high = mid;
 		}
+		std::cout << "for binary search each level : " << level << std::endl;
 	}
 	return low;
 }
@@ -173,8 +175,8 @@ void PmergeMe::swapPairs(std::vector<std::vector<int>> &k, int level)
 		
 		// Sadece ilk elemanları karşılaştır
 		if (k[i][0] < k[group1_end][0]) {
-			this->counter++;
 			// Swap işlemi
+			this->counter++;
 			for (size_t j = 0; j < (level / 2) && (group1_end + j) < k.size(); ++j) {
 				std::swap(k[i + j], k[group1_end + j]);
 			}
@@ -225,11 +227,16 @@ void PmergeMe::sort(std::vector<std::vector<int> > &temp)
 		main.push_back(temp[i][0]);
 		pend.push_back(temp[i][1]);
 	}
+	
+	size_t eklenti;
+	eklenti = 0;
 	main.insert(main.begin(), pend[0]);
+	eklenti++;
 	for (size_t i = 0; i < RestVector.size(); i++)
 	{
 		int m = binarySearch(main, RestVector[i]);
 		main.insert(main.begin()+ m, RestVector[i]);
+		// eklenti++;
 	}
 	displayArray(main);
 	displayArray(pend);
@@ -239,15 +246,15 @@ void PmergeMe::sort(std::vector<std::vector<int> > &temp)
 	std::vector<int>::iterator it;
 	int target;
 	size_t maxpos;
-	size_t eklenti;
 	size_t currentpos;
-
-	eklenti = 0;
-	for (it = aa.begin(); it < aa.end(); it++)
+	for (it = aa.begin(); it != aa.end(); it++)
 	{
 		target = pend.at(*it - 1);
 		std::cout << "jacob index : " << *it << std::endl;
+		std::cout << "inserting in  main index : " << currentpos << " the number " << target << std::endl;
 		maxpos = *it + eklenti;
+		if (maxpos >= main.size() - 1)
+			maxpos  = main.size() - 1;
 		currentpos = optimizedBinarySearch(main, target, maxpos);
 		main.insert(main.begin() + currentpos, target);
 		eklenti++;
@@ -328,35 +335,59 @@ void PmergeMe::denemeSortPart2(std::vector<std::vector<int> > &bakalim)
 		main.push_back(bakalim[i]);
 		pend.push_back(bakalim[i + 1]);
 	}
+	size_t eklenti;
+	eklenti = 0;
 	main.insert(main.begin(), pend[0]);
-
+	// eklenti++;
+	if (ss.size() >= bakalim[0].size())
+		{
+			std::vector<int> z;
+			size_t elements_to_take = std::min(ss.size(), bakalim[0].size());
+			z.insert(z.end(), ss.begin(), ss.begin() + elements_to_take);
+			ss.erase(ss.begin(), ss.begin() + elements_to_take);
+			
+			size_t insert_pos = binarySearch1(main, z);
+			main.insert(main.begin() + insert_pos, z);
+			if (ss.size() >= bakalim[0].size())
+			{
+			std::vector<int> z;
+			size_t elements_to_take = std::min(ss.size(), bakalim[0].size());
+			z.insert(z.end(), ss.begin(), ss.begin() + elements_to_take);
+			ss.erase(ss.begin(), ss.begin() + elements_to_take);
+			
+			size_t insert_pos = binarySearch1(main, z);
+			main.insert(main.begin() + insert_pos, z);
+			}
+			// eklenti++;
+		}
+	
 	std::vector<int> minimain;
 	std::vector<int> minipend;
 	for (size_t i = 0; i < main.size(); i++)
 		minimain.push_back(main[i][0]);
-	for (size_t i = 0; i < pend.size(); i++)
+		for (size_t i = 0; i < pend.size(); i++)
 		minipend.push_back(pend[i][0]);
-	// //displayArray(minimain);
-	// displayArray(minipend);
-	std::vector<int> aa = generatPositions(minipend);
-	std::vector<int>::iterator it;
-	int target;
-	size_t maxpos;
-	size_t eklenti;
-	size_t currentpos;
-
-	eklenti = 0;
-	for (it = aa.begin(); it < aa.end(); it++)
-	{
-		target = minipend.at(*it - 1);
+		// //displayArray(minimain);
+		// displayArray(minipend);
+		std::vector<int> aa = generatPositions(minipend);
+		std::vector<int>::iterator it;
+		int target;
+		size_t maxpos;
+		size_t currentpos;
+		
+		for (it = aa.begin(); it != aa.end(); it++)
+		{
+			target = minipend.at(*it - 1);
 		std::cout << "jacob index : " << *it << std::endl;
 		maxpos = *it + eklenti;
+		if (maxpos >= main.size() - 1)
+			maxpos  = main.size() - 1;
 		currentpos = optimizedBinarySearch(minimain, target, maxpos);
 		minimain.insert(minimain.begin() + currentpos, target);
 		main.insert(main.begin() + currentpos, pend[*it - 1]);
 		eklenti++;
 	}
-	displayPairs(main);
+	//displayPairs(main);
 	bakalim.clear();
 	bakalim = main;
 }
@@ -433,26 +464,6 @@ std::vector<std::vector<int> > PmergeMe::denemeSort2(std::vector<int> & temp)
 	{
 		splitAndUpdate(main);
 		denemeSortPart2(main);
-		if (ss.size() >= main[0].size())
-		{
-			std::vector<int> z;
-			size_t elements_to_take = std::min(ss.size(), a[0].size());
-			z.insert(z.end(), ss.begin(), ss.begin() + elements_to_take);
-			ss.erase(ss.begin(), ss.begin() + elements_to_take);
-			
-			size_t insert_pos = binarySearch1(main, z);
-			main.insert(main.begin() + insert_pos, z);
-			if (ss.size() >= a[0].size())
-			{
-			std::vector<int> z;
-			size_t elements_to_take = std::min(ss.size(), a[0].size());
-			z.insert(z.end(), ss.begin(), ss.begin() + elements_to_take);
-			ss.erase(ss.begin(), ss.begin() + elements_to_take);
-			
-			size_t insert_pos = binarySearch1(main, z);
-			main.insert(main.begin() + insert_pos, z);
-			}
-		}
 	}
 	displayPair(main);
 	return (main);
