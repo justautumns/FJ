@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <mehmeyil@student.42vienna.com>   +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:25:09 by mehmeyil          #+#    #+#             */
-/*   Updated: 2025/03/30 03:49:16 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2025/03/30 19:48:39 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,9 @@
 
 PmergeMe::PmergeMe() {}
 
-PmergeMe::PmergeMe(const std::vector<int> &k, const std::list<int> &m) : FirstVector(k), FirstList(m) {
+PmergeMe::PmergeMe(const std::vector<int> &k, const std::list<int> &m) : FirstVector(k), FirstList(m)
+{
 	this->counter = 0;
-	this->level = 1;
-	this->flag = false;
 }
 
 PmergeMe::PmergeMe(const PmergeMe &a) : FirstVector(a.FirstVector), FirstList(a.FirstList)
@@ -39,16 +38,14 @@ size_t PmergeMe::binarySearch(const std::vector<int>& arr, int value)
 {
 	size_t low = 0;
 	size_t high = arr.size();
-	while (low < high) {
+	while (low < high)
+	{
 		this->counter++;
-		this->level++;
 		size_t mid = low + (high - low) / 2;
-		if (arr[mid] < value) {
+		if (arr[mid] < value)
 			low = mid + 1;
-		} else {
+		 else
 			high = mid;
-		}
-		std::cout << "for binary search each level : " << level << std::endl;
 	}
 	return low;
 }
@@ -58,14 +55,12 @@ size_t PmergeMe::optimizedBinarySearch(const std::vector<int>& arr, int value, s
 	size_t high = maxIndex;
 	while (low < high)
 	{
-	this->counter++;
-	size_t mid = (low + (high)) / 2;
-	if (arr[mid] < value)
-	{
-		low = mid + 1;
-	} else {
-		high = mid;
-	}
+		this->counter++;
+		size_t mid = (low + (high)) / 2;
+		if (arr[mid] < value)
+			low = mid + 1;
+		else
+			high = mid;
 	}
 	return low;
 }
@@ -74,11 +69,12 @@ int PmergeMe::eeeh(int n)
 	if (n == 0) return 0;
 	if (n == 1) return 1;
 
-	int prev = 1;      // jacobsthal(1)
-	int prev_prev = 0;  // jacobsthal(0)
+	int prev = 1;	//	jacobsthal(1)
+	int prev_prev = 0;	//jacobsthal(0)
 	int current;
 
-	for (int i = 2; i <= n; ++i) {
+	for (int i = 2; i <= n; ++i)
+	{
 		current = prev + 2 * prev_prev;
 		prev_prev = prev;
 		prev = current;
@@ -89,45 +85,46 @@ int PmergeMe::eeeh(int n)
 std::vector<int> PmergeMe::generateJacobInsertionSequence(std::vector<int> &pend)
 {
 	std::vector<int> jacobs;
-	int index = 3;
-	int jcobstalIndex;
+	size_t index = 3;
+	size_t jcobstalIndex;
 
-	while ((jcobstalIndex = eeeh(index)) <= pend.size()) { // <= kullan
+	while ((jcobstalIndex = eeeh(index)) <= pend.size())
+	{
 		jacobs.push_back(jcobstalIndex);
 		index++;
 	}
 	return jacobs;
 }
 
-void displayArray(std::vector<int> &a)
+void PmergeMe::displayArray(std::vector<int> &a)
 {
 	for (size_t i = 0; i < a.size(); i++)
-	{
 		std::cout << a[i] << " , ";
-	}
 	std::cout << std::endl;
 }
-std::vector<int> PmergeMe::generatPositions(std::vector<int> &pend)
+std::vector<int> PmergeMe::generatePositions(std::vector<int> &pend)
 {
 	std::vector<int> positions;
 	std::vector<int> jacobNumbers = generateJacobInsertionSequence(pend);
 
-	size_t lastPos = 1;
+	size_t sonposition = 1;
 
-	for (size_t i = 0; i < jacobNumbers.size(); i++) {
+	for (size_t i = 0; i < jacobNumbers.size(); i++)
+	{
 		size_t val = jacobNumbers[i];
 		positions.push_back(val);
 		
 		size_t pos = val - 1;
-		while (pos > lastPos) {
+		while (pos > sonposition) {
 			positions.push_back(pos);
 			pos--;
 		}
-		lastPos = val;
+		sonposition = val;
 	}
 
 	size_t val = pend.size();
-	while (val > lastPos) {
+	while (val > sonposition)
+	{
 		positions.push_back(val);
 		val--;
 	}
@@ -135,7 +132,7 @@ std::vector<int> PmergeMe::generatPositions(std::vector<int> &pend)
 	return positions;
 }
 
-void displayPairs(std::vector<std::vector<int>  > &temp)
+void PmergeMe::displayPairs(std::vector<std::vector<int>  > &temp)
 {
 	for (size_t i = 0; i < temp.size(); i++)
 	{
@@ -145,7 +142,7 @@ void displayPairs(std::vector<std::vector<int>  > &temp)
 	std::cout << std::endl;
 }
 
-void PmergeMe::swapPairs(std::vector<std::vector<int>> &k, int level)
+void PmergeMe::swapPairs(std::vector<std::vector<int> > &k, size_t level)
 {
 	// 1. Base Case: Eğer level, k.size()'dan büyükse, kalanları işle
 	if (level > k.size()) {
@@ -153,19 +150,17 @@ void PmergeMe::swapPairs(std::vector<std::vector<int>> &k, int level)
 		size_t remaining_start = (k.size() / (level / 2)) * (level / 2);
 		
 		// Kalan elemanları geriKalan'a ekle
-		for (size_t i = remaining_start; i < k.size(); ++i) {
+		for (size_t i = remaining_start; i < k.size(); ++i)
 			geriKalan.push_back(k[i]);
-		}
 		
 		// Eklenen elemanları ana vektörden çıkar
 		k.erase(k.begin() + remaining_start, k.end());
-		
-		pairCount = level / 2;  // Son işlenen pair boyutunu kaydet
 		return;
 	}
 
 	// 2. Pair'leri karşılaştır ve swap et
-	for (size_t i = 0; i < k.size(); i += level) {
+	for (size_t i = 0; i < k.size(); i += level)
+	{
 		size_t group1_end = i + (level / 2);
 		size_t group2_end = i + level;
 		
@@ -178,12 +173,10 @@ void PmergeMe::swapPairs(std::vector<std::vector<int>> &k, int level)
 		if (k[i][0] < k[group1_end][0])
 		{
 			// Swap işlemi
-			for (size_t j = 0; j < (level / 2) && (group1_end + j) < k.size(); ++j) {
+			for (size_t j = 0; j < (level / 2) && (group1_end + j) < k.size(); ++j)
 				std::swap(k[i + j], k[group1_end + j]);
-			}
 		}
 	}
-
 	// 3. Bir sonraki level için recursive çağrı
 	swapPairs(k, level * 2);
 }
@@ -192,7 +185,7 @@ void PmergeMe::pairMake(std::vector<int> &arr)
 {
 	if (arr.size() <= 1)
 		throw std::runtime_error("Array is too short");
-	int i = 0;
+	size_t i = 0;
 	while (i < arr.size() - 1)
 	{
 		this->counter++;
@@ -215,7 +208,7 @@ void PmergeMe::pairMake(std::vector<int> &arr)
 	if (i != arr.size())
 		RestVector.push_back(arr[i]);
 	displayPairs(this->Groups);
-	std::cout << "yukaridaki ilk hali" << std::endl;
+	//std::cout << "yukaridaki ilk hali" << std::endl;
 	return (swapPairs(this->Groups, 2));
 }
 
@@ -233,11 +226,9 @@ void PmergeMe::sort(std::vector<std::vector<int> > &temp)
 	eklenti = 0;
 	main.insert(main.begin(), pend[0]);
 	eklenti++;
-	displayArray(main);
-	displayArray(pend);
-	// std::vector<int> poss = generatPositions(pend);
-	// int target;
-	std::vector<int> aa = generatPositions(pend);
+	// displayArray(main);
+	// displayArray(pend);
+	std::vector<int> aa = generatePositions(pend);
 	std::vector<int>::iterator it;
 	int target;
 	size_t maxpos;
@@ -245,16 +236,14 @@ void PmergeMe::sort(std::vector<std::vector<int> > &temp)
 	for (it = aa.begin(); it != aa.end(); it++)
 	{
 		target = pend.at(*it - 1);
-		std::cout << "jacob index : " << *it << std::endl;
+		//std::cout << "jacob index : " << *it << std::endl;
 		maxpos = *it - 1 + eklenti;
 		if (maxpos >= main.size())
 			maxpos  = main.size();
-			std::cout << "MAX index : " << maxpos << std::endl;
-			currentpos = optimizedBinarySearch(main, target, maxpos);
-			std::cout << "inserting in  main index : " << currentpos << " the number " << target << std::endl;
-			main.insert(main.begin() + currentpos, target);
-			//displayArray(main);
-		// if (currentpos >= *it - 1)
+		//std::cout << "MAX index : " << maxpos << std::endl;
+		currentpos = optimizedBinarySearch(main, target, maxpos);
+		//std::cout << "inserting in  main index : " << currentpos << " the number " << target << std::endl;
+		main.insert(main.begin() + currentpos, target);
 		eklenti++;
 	}
 	for (size_t i = 0; i < RestVector.size(); i++)
@@ -283,7 +272,7 @@ size_t PmergeMe::optimizedBinarySearch1(std::vector<std::vector<int> >& arr, std
 	}
 	return low;
 }
-size_t PmergeMe::binarySearch1(const std::vector<std::vector<int>> & arr, std::vector<int> value)
+size_t PmergeMe::binarySearch1(const std::vector<std::vector<int> > & arr, std::vector<int> value)
 {
 	size_t low = 0;
 	size_t high = arr.size();
@@ -301,7 +290,7 @@ size_t PmergeMe::binarySearch1(const std::vector<std::vector<int>> & arr, std::v
 	return low;
 }
 
-void displayPair(std::vector<std::vector<int>> &s)
+void PmergeMe::displayPair(std::vector<std::vector<int> > &s)
 {
 	for (size_t i = 0; i < s.size(); i++)
 	{
@@ -311,24 +300,8 @@ void displayPair(std::vector<std::vector<int>> &s)
 	}
 	std::cout << std::endl;
 }
-void display3DArray(const std::vector<std::vector<std::vector<int>>> &vec)
-{
-	std::cout << "[\n";
-	for (const auto &matrix : vec) {
-		std::cout << "  { ";
-		for (const auto &pair : matrix) {
-			std::cout << "[";
-			for (size_t i = 0; i < pair.size(); i++) {
-				std::cout << pair[i] << (i < pair.size() - 1 ? ", " : "");
-			}
-			std::cout << "] ";
-		}
-		std::cout << "},\n";
-	}
-	std::cout << "]\n";
-}
 
-void PmergeMe::denemeSortPart2(std::vector<std::vector<int> > &bakalim)
+void PmergeMe::sortPairs(std::vector<std::vector<int> > &bakalim)
 {
 	// if (bakalim.size() < 8)
 	// 	return;
@@ -369,20 +342,20 @@ void PmergeMe::denemeSortPart2(std::vector<std::vector<int> > &bakalim)
 	std::vector<int> minipend;
 	for (size_t i = 0; i < main.size(); i++)
 		minimain.push_back(main[i][0]);
-		for (size_t i = 0; i < pend.size(); i++)
+	for (size_t i = 0; i < pend.size(); i++)
 		minipend.push_back(pend[i][0]);
 		// //displayArray(minimain);
 		// displayArray(minipend);
-		std::vector<int> aa = generatPositions(minipend);
-		std::vector<int>::iterator it;
-		int target;
-		size_t maxpos;
-		size_t currentpos;
+	std::vector<int> aa = generatePositions(minipend);
+	std::vector<int>::iterator it;
+	int target;
+	size_t maxpos;
+	size_t currentpos;
 		
-		for (it = aa.begin(); it != aa.end(); it++)
-		{
-			target = minipend.at(*it - 1);
-		std::cout << "jacob index : " << *it << std::endl;
+	for (it = aa.begin(); it != aa.end(); it++)
+	{
+		target = minipend.at(*it - 1);
+			//std::cout << "jacob index : " << *it << std::endl;
 		maxpos = *it + eklenti;
 		if (maxpos >= main.size() - 1)
 			maxpos  = main.size() - 1;
@@ -408,9 +381,9 @@ std::vector<std::vector<int> > PmergeMe::divideArray(std::vector<int> &m)
 	return result;
 }
 
-void PmergeMe::splitAndUpdate(std::vector<std::vector<int>>& arr)
+void PmergeMe::splitAndUpdate(std::vector<std::vector<int> >& arr)
 {
-	std::vector<std::vector<int>> newArr;
+	std::vector<std::vector<int> > newArr;
 
 	for (size_t i = 0; i < arr.size(); i++)
 	{
@@ -429,13 +402,29 @@ void PmergeMe::splitAndUpdate(std::vector<std::vector<int>>& arr)
 	}
 	arr = newArr;
 }
-std::vector<std::vector<int> > PmergeMe::denemeSort2(std::vector<int> & temp)
+std::vector<std::vector<int> > PmergeMe::mergeInsertPairs(std::vector<int> & temp)
 {
+	std::vector<std::vector<int> > main;
+	if (temp.size() < 4)
+	{
+			main.push_back(temp);
+			displayPair(main);
+			return (main);
+	}
 	std::vector<std::vector<int> > karisik = divideArray(temp);
+	if (temp.size() < 8)
+	{
+		main.push_back(karisik[1]);
+		main.push_back(karisik[0]);
+		if (ss.size() >= main[0].size())
+		{
+			int m = binarySearch1(main, ss);
+			main.insert(main.begin() + m, ss);
+		}
+		return (main);
+	}
 	std::vector<std::vector<int> > a = divideArray(karisik[0]);
 	std::vector<std::vector<int> > b = divideArray(karisik[1]);
-	std::vector<std::vector<int> > main;
-
 	if (a.size() + b.size() == 4)
 	{
 		main.push_back(b[1]);
@@ -463,13 +452,13 @@ std::vector<std::vector<int> > PmergeMe::denemeSort2(std::vector<int> & temp)
 		}
 		int k = optimizedBinarySearch1(main, a[1], 3);
 		main.insert(main.begin() + k , a[1]);
+		//displayPairs(main);
 	}
 	while (main[0].size() != 2)
 	{
 		splitAndUpdate(main);
-		denemeSortPart2(main);
+		sortPairs(main);
 	}
-	displayPair(main);
 	return (main);
 }
 void PmergeMe::passArgs()
@@ -482,18 +471,18 @@ void PmergeMe::passArgs()
 		for (size_t m = 0; m < Groups[i].size(); m++)
 			mm.push_back(Groups[i][m]);
 	}
-	displayArray(mm);
+	//displayArray(mm);
 	for (size_t i = 0; i < geriKalan.size(); i++)
 	{
 		for (size_t m = 0; m < geriKalan[i].size(); m++)
 		{
-			std::cout << geriKalan[i][m] << " ";
+			//std::cout << geriKalan[i][m] << " ";
 			ss.push_back(geriKalan[i][m]);
 		}
 		std::cout << std::endl;
 	}
 	std::vector<std::vector<int> > sorted;
-	sorted = denemeSort2(mm);
+	sorted = mergeInsertPairs(mm);
 	sort(sorted);
 	std::cout << "Final count of comparison : "<<this->counter << std::endl;
 }
