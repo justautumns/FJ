@@ -6,7 +6,7 @@
 /*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:16:03 by mehmeyil          #+#    #+#             */
-/*   Updated: 2025/03/30 20:35:25 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2025/03/30 21:17:50 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 #include <exception>
 #include <algorithm>
 #include <cmath>
+#include <limits>
+#include <sstream>
 
 class PmergeMe
 {
