@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:16:03 by mehmeyil          #+#    #+#             */
-/*   Updated: 2025/03/30 21:21:49 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2025/03/30 23:17:35 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <algorithm>
 #include <cmath>
 #include <limits>
+#include <ctime>
 #include <sstream>
 
 class PmergeMe
@@ -48,7 +49,7 @@ class PmergeMe
 	// ---------------------
 	
 	void swapPairs(std::vector<std::vector<int> > &k, size_t level);
-	void sort(std::vector<std::vector<int> > &temp);
+	std::vector<int> sort(std::vector<std::vector<int> > &temp);
 	void sortPairs(std::vector<std::vector<int> > &bakalim);
 	std::vector<std::vector<int> > mergeInsertPairs(std::vector<int> & temp);
 	
@@ -72,7 +73,7 @@ class PmergeMe
 	int eeehD(int n);
 	
 	void swapPairsD(std::deque<std::deque<int> > &k, size_t level);
-	void sortD(std::deque<std::deque<int> > &temp);
+	std::deque<int> sortD(std::deque<std::deque<int> > &temp);
 	void sortPairsD(std::deque<std::deque<int> > &bakalim);
 	std::deque<std::deque<int> > mergeInsertPairsD(std::deque<int> & temp);
 	

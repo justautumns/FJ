@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:54:38 by mehmeyil          #+#    #+#             */
-/*   Updated: 2025/03/30 21:31:39 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2025/03/31 00:12:15 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ bool safeStringToInt(const std::string &str, int &result)
 	return true;
 }
 template <typename T>
-bool hasDuplicate(T &container)
+bool hasDuplicate(T container)
 {
 	std::sort(container.begin(), container.end()); // O(N log N) I had to check this before I start.
 	return std::adjacent_find(container.begin(), container.end()) != container.end();
@@ -67,24 +67,44 @@ int main(int ac, char **av)
 			throw std::runtime_error("You've entered no input");
 		std::vector<int> deneme;
 		std::deque<int> aa;
+		std::vector<int> ann;
 		int m = 1;
 		while (av[m])
 		{
 			int temp;
 			if (!safeStringToInt(av[m], temp))
 				return (-1);
-			else
-			{
-				deneme.push_back(temp);
-				aa.push_back(temp);
+				else
+				{
+					deneme.push_back(temp);
+					aa.push_back(temp);
+					ann.push_back(temp);
+				}
+				m++;
 			}
-			m++;
-		}
-		if (hasDuplicate(deneme) || hasDuplicate(aa))
+			if (hasDuplicate(deneme) || hasDuplicate(aa))
 			throw std::runtime_error("The sequence you've provided has duplicates please re check and run");
+		std::cout << "Before: ";
+		for (size_t i = 0; i < deneme.size(); i++)
+			std::cout << deneme[i] << " ";
 		PmergeMe x(deneme, aa);
+		double	passingTime;
+		std::clock_t	start, end;
+		start = std::clock();
+		std::cout << "\nAfter: ";
 		x.passArgs();
+		end = std::clock();
+		passingTime = static_cast<double>(end - start) / CLOCKS_PER_SEC;
+		std::cout << "Time to process a range of " << ac - 1 << " elements with std::vector " << passingTime * 1000000.0 << " us" << std::endl;
+		std::cout << "Before: ";
+		for (size_t i = 0; i < aa.size(); i++)
+			std::cout << aa[i] << " ";
+		std::cout << "\nAfter: ";
+		start = std::clock();
 		x.passArgsD();
+		end = std::clock();
+		passingTime = static_cast<double>(end - start) / CLOCKS_PER_SEC;
+		std::cout << "Time to process a range of " << ac - 1 << " elements with std::deque " << passingTime * 1000000.0 << " us" << std::endl;
 	} catch(const std::exception &a)
 	{
 		std::cerr << a.what() << std::endl;

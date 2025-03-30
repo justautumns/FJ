@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42vienna.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:25:09 by mehmeyil          #+#    #+#             */
-/*   Updated: 2025/03/30 21:02:32 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2025/03/31 00:11:09 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ std::vector<int> PmergeMe::generateJacobInsertionSequence(std::vector<int> &pend
 void PmergeMe::displayArray(std::vector<int> &a)
 {
 	for (size_t i = 0; i < a.size(); i++)
-		std::cout << a[i] << " , ";
+		std::cout << a[i] << " ";
 	std::cout << std::endl;
 }
 std::vector<int> PmergeMe::generatePositions(std::vector<int> &pend)
@@ -185,7 +185,7 @@ void PmergeMe::swapPairs(std::vector<std::vector<int> > &k, size_t level)
 void PmergeMe::pairMake(std::vector<int> &arr)
 {
 	if (arr.size() <= 1)
-		throw std::runtime_error("Array is too short");
+		return ;
 	size_t i = 0;
 	while (i < arr.size() - 1)
 	{
@@ -208,12 +208,12 @@ void PmergeMe::pairMake(std::vector<int> &arr)
 	}
 	if (i != arr.size())
 		RestVector.push_back(arr[i]);
-	displayPairs(this->Groups);
+	//displayPairs(this->Groups);
 	//std::cout << "yukaridaki ilk hali" << std::endl;
 	return (swapPairs(this->Groups, 2));
 }
 
-void PmergeMe::sort(std::vector<std::vector<int> > &temp)
+std::vector<int> PmergeMe::sort(std::vector<std::vector<int> > &temp)
 {
 	std::vector<int> main;
 	std::vector<int> pend;
@@ -252,8 +252,7 @@ void PmergeMe::sort(std::vector<std::vector<int> > &temp)
 		int m = binarySearch(main, RestVector[i]);
 		main.insert(main.begin()+ m, RestVector[i]);
 	}
-	displayArray(main);
-	std::cout << "Size of sorted array : "<< main.size() << std::endl;
+	return (main);
 }
 
 
@@ -304,8 +303,6 @@ void PmergeMe::displayPair(std::vector<std::vector<int> > &s)
 
 void PmergeMe::sortPairs(std::vector<std::vector<int> > &bakalim)
 {
-	// if (bakalim.size() < 8)
-	// 	return;
 	std::vector<std::vector<int> > main;
 	std::vector<std::vector<int> > pend;
 	for (size_t i = 0; i < bakalim.size() - 1; i += 2)
@@ -358,8 +355,8 @@ void PmergeMe::sortPairs(std::vector<std::vector<int> > &bakalim)
 		target = minipend.at(*it - 1);
 			//std::cout << "jacob index : " << *it << std::endl;
 		maxpos = *it + eklenti;
-		if (maxpos >= main.size() - 1)
-			maxpos  = main.size() - 1;
+		if (maxpos >= main.size())
+			maxpos  = main.size();
 		currentpos = optimizedBinarySearch(minimain, target, maxpos);
 		minimain.insert(minimain.begin() + currentpos, target);
 		main.insert(main.begin() + currentpos, pend[*it - 1]);
@@ -409,7 +406,6 @@ std::vector<std::vector<int> > PmergeMe::mergeInsertPairs(std::vector<int> & tem
 	if (temp.size() < 4)
 	{
 			main.push_back(temp);
-			displayPair(main);
 			return (main);
 	}
 	std::vector<std::vector<int> > karisik = divideArray(temp);
@@ -464,27 +460,34 @@ std::vector<std::vector<int> > PmergeMe::mergeInsertPairs(std::vector<int> & tem
 }
 void PmergeMe::passArgs()
 {
-	pairMake(this->FirstVector);
-	displayPairs(Groups);
-	std::vector<int> mm;
-	for (size_t i = 0; i < Groups.size(); i++)
+	std::vector<int> cikti;
+	if (this->FirstVector.size() == 1)
+		cikti = FirstVector;
+	else
 	{
-		for (size_t m = 0; m < Groups[i].size(); m++)
-			mm.push_back(Groups[i][m]);
-	}
-	//displayArray(mm);
-	for (size_t i = 0; i < geriKalan.size(); i++)
-	{
-		for (size_t m = 0; m < geriKalan[i].size(); m++)
+		pairMake(this->FirstVector);
+		// displayPairs(Groups);
+		std::vector<int> mm;
+		for (size_t i = 0; i < Groups.size(); i++)
 		{
-			//std::cout << geriKalan[i][m] << " ";
-			ss.push_back(geriKalan[i][m]);
+			for (size_t m = 0; m < Groups[i].size(); m++)
+				mm.push_back(Groups[i][m]);
 		}
-		std::cout << std::endl;
+		//displayArray(mm);
+		for (size_t i = 0; i < geriKalan.size(); i++)
+		{
+			for (size_t m = 0; m < geriKalan[i].size(); m++)
+			{
+				//std::cout << geriKalan[i][m] << " ";
+				ss.push_back(geriKalan[i][m]);
+			}
+			//std::cout << std::endl;
+		}
+		std::vector<std::vector<int> > sorted;
+		sorted = mergeInsertPairs(mm);
+		cikti = sort(sorted);
 	}
-	std::vector<std::vector<int> > sorted;
-	sorted = mergeInsertPairs(mm);
-	sort(sorted);
+	displayArray(cikti);
 	std::cout << "Final count of comparison : "<<this->counter << std::endl;
 }
 // DEQUE
@@ -554,7 +557,7 @@ std::deque<int> PmergeMe::generateJacobInsertionSequenceD(std::deque<int> &pend)
 void PmergeMe::displayArrayD(std::deque<int> &a)
 {
 	for (size_t i = 0; i < a.size(); i++)
-		std::cout << a[i] << " , ";
+		std::cout << a[i] << " ";
 	std::cout << std::endl;
 }
 std::deque<int> PmergeMe::generatePositionsD(std::deque<int> &pend)
@@ -639,7 +642,7 @@ void PmergeMe::swapPairsD(std::deque<std::deque<int> > &k, size_t level)
 void PmergeMe::pairMakeD(std::deque<int> &arr)
 {
 	if (arr.size() <= 1)
-		throw std::runtime_error("Array is too short");
+		return ;
 	size_t i = 0;
 	while (i < arr.size() - 1)
 	{
@@ -667,7 +670,7 @@ void PmergeMe::pairMakeD(std::deque<int> &arr)
 	return (swapPairsD(this->Groupsd, 2));
 }
 
-void PmergeMe::sortD(std::deque<std::deque<int> > &temp)
+std::deque<int> PmergeMe::sortD(std::deque<std::deque<int> > &temp)
 {
 	std::deque<int> main;
 	std::deque<int> pend;
@@ -706,8 +709,7 @@ void PmergeMe::sortD(std::deque<std::deque<int> > &temp)
 		int m = binarySearchD(main, RestDeque[i]);
 		main.insert(main.begin()+ m, RestDeque[i]);
 	}
-	displayArrayD(main);
-	std::cout << "Size of sorted array : "<< main.size() << std::endl;
+	return (main);
 }
 
 
@@ -863,7 +865,7 @@ std::deque<std::deque<int> > PmergeMe::mergeInsertPairsD(std::deque<int> & temp)
 	if (temp.size() < 4)
 	{
 			main.push_back(temp);
-			displayPairD(main);
+			//displayPairD(main);
 			return (main);
 	}
 	std::deque<std::deque<int> > karisik = divideArrayD(temp);
@@ -918,27 +920,33 @@ std::deque<std::deque<int> > PmergeMe::mergeInsertPairsD(std::deque<int> & temp)
 }
 void PmergeMe::passArgsD()
 {
-	pairMakeD(this->FirstDeque);
-	displayPairsD(Groupsd);
-	std::deque<int> mm;
-	for (size_t i = 0; i < Groupsd.size(); i++)
+	std::deque<int> cikti;
+	if (this->FirstDeque.size() == 1)
+		cikti = FirstDeque;
+	else
 	{
-		for (size_t m = 0; m < Groupsd[i].size(); m++)
-			mm.push_back(Groupsd[i][m]);
-	}
-	//displayArray(mm);
-	for (size_t i = 0; i < geriKaland.size(); i++)
-	{
-		for (size_t m = 0; m < geriKaland[i].size(); m++)
+		pairMakeD(this->FirstDeque);
+		//displayPairsD(Groupsd);
+		std::deque<int> mm;
+		for (size_t i = 0; i < Groupsd.size(); i++)
 		{
-			//std::cout << geriKaland[i][m] << " ";
-			ssd.push_back(geriKaland[i][m]);
+			for (size_t m = 0; m < Groupsd[i].size(); m++)
+				mm.push_back(Groupsd[i][m]);
 		}
-		std::cout << std::endl;
+		//displayArray(mm);
+		for (size_t i = 0; i < geriKaland.size(); i++)
+		{
+			for (size_t m = 0; m < geriKaland[i].size(); m++)
+			{
+				//std::cout << geriKaland[i][m] << " ";
+				ssd.push_back(geriKaland[i][m]);
+			}
+		}
+		std::deque<std::deque<int> > sorted;
+		sorted = mergeInsertPairsD(mm);
+		cikti = sortD(sorted);
 	}
-	std::deque<std::deque<int> > sorted;
-	sorted = mergeInsertPairsD(mm);
-	sortD(sorted);
+	displayArrayD(cikti);
 	std::cout << "Final count of comparison : "<<this->counterD << std::endl;
 }
 
