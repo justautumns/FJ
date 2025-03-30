@@ -6,7 +6,7 @@
 /*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:16:03 by mehmeyil          #+#    #+#             */
-/*   Updated: 2025/03/30 21:17:50 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2025/03/30 21:21:49 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,7 @@ class PmergeMe
 	std::deque<int> ssd;
 	std::deque<std::deque<int> > Groupsd;
 	
-	public :
-	PmergeMe();
-	PmergeMe(const std::vector<int> &k, const std::deque<int> &m);
-	PmergeMe(const PmergeMe &a);
-	PmergeMe&operator=(PmergeMe const &a);
+	
 	void pairMake(std::vector<int> &arr);
 	size_t optimizedBinarySearch(const std::vector<int>& arr, int value, size_t maxIndex);
 	size_t binarySearch(const std::vector<int>& arr, int value);
@@ -59,7 +55,6 @@ class PmergeMe
 	size_t optimizedBinarySearch1(std::vector<std::vector<int> >& arr, std::vector<int> value, size_t maxIndex);
 	size_t binarySearch1(const std::vector<std::vector<int> > & arr, std::vector<int> value);
 	
-	void passArgs();
 	
 	std::vector<int> generateJacobInsertionSequence(std::vector<int> &pend);
 
@@ -75,7 +70,6 @@ class PmergeMe
 	size_t optimizedBinarySearchD(const std::deque<int>& arr, int value, size_t maxIndex);
 	size_t binarySearchD(const std::deque<int>& arr, int value);
 	int eeehD(int n);
-	// ---------------------
 	
 	void swapPairsD(std::deque<std::deque<int> > &k, size_t level);
 	void sortD(std::deque<std::deque<int> > &temp);
@@ -85,17 +79,22 @@ class PmergeMe
 	size_t optimizedBinarySearch1D(std::deque<std::deque<int> >& arr, std::deque<int> value, size_t maxIndex);
 	size_t binarySearch1D(const std::deque<std::deque<int> > & arr, std::deque<int> value);
 	
-	void passArgsD();
 	
 	std::deque<int> generateJacobInsertionSequenceD(std::deque<int> &pend);
-
+	
 	std::deque<std::deque<int> > divideArrayD(std::deque<int> &m);
 	void splitAndUpdateD(std::deque<std::deque<int> >& arr);
 	void displayArrayD(std::deque<int> &a);
 	void displayPairsD(std::deque<std::deque<int>  > &temp);
 	void displayPairD(std::deque<std::deque<int> > &s);
 	std::deque<int> generatePositionsD(std::deque<int> &pend);
-	
+	public :
+	PmergeMe();
+	PmergeMe(const std::vector<int> &k, const std::deque<int> &m);
+	PmergeMe(const PmergeMe &a);
+	PmergeMe&operator=(PmergeMe const &a);
+	void passArgsD();
+	void passArgs();
 	~PmergeMe();
 };
 

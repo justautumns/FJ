@@ -6,7 +6,7 @@
 /*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:54:38 by mehmeyil          #+#    #+#             */
-/*   Updated: 2025/03/30 21:18:13 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2025/03/30 21:31:39 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,12 @@ bool safeStringToInt(const std::string &str, int &result)
 	result = static_cast<int>(temp);
 	return true;
 }
+template <typename T>
+bool hasDuplicate(T &container)
+{
+	std::sort(container.begin(), container.end()); // O(N log N) I had to check this before I start.
+	return std::adjacent_find(container.begin(), container.end()) != container.end();
+}
 int main(int ac, char **av)
 {
 	try
@@ -74,10 +80,11 @@ int main(int ac, char **av)
 			}
 			m++;
 		}
+		if (hasDuplicate(deneme) || hasDuplicate(aa))
+			throw std::runtime_error("The sequence you've provided has duplicates please re check and run");
 		PmergeMe x(deneme, aa);
 		x.passArgs();
 		x.passArgsD();
-		std::cout << deneme.size() << std::endl;
 	} catch(const std::exception &a)
 	{
 		std::cerr << a.what() << std::endl;
