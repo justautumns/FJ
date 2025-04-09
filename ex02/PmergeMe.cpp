@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PmergeMe.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <mehmeyil@student.42vienna.com>   +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:25:09 by mehmeyil          #+#    #+#             */
-/*   Updated: 2025/03/31 00:11:09 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2025/04/09 22:39:37 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,7 @@ void PmergeMe::swapPairs(std::vector<std::vector<int> > &k, size_t level)
 				std::swap(k[i + j], k[group1_end + j]);
 		}
 	}
+	//displayPairs (Groups);
 	// 3. Bir sonraki level için recursive çağrı
 	swapPairs(k, level * 2);
 }
@@ -229,6 +230,14 @@ std::vector<int> PmergeMe::sort(std::vector<std::vector<int> > &temp)
 	eklenti++;
 	// displayArray(main);
 	// displayArray(pend);
+	for (size_t i = 0; i < RestVector.size(); i++)
+	{
+		pend.push_back(RestVector[i]);
+	}
+	// for (size_t i = 0; i < ss.size(); i++)
+	// {
+	// 	pend.push_back(ss[i]);
+	// }
 	std::vector<int> aa = generatePositions(pend);
 	std::vector<int>::iterator it;
 	int target;
@@ -247,11 +256,8 @@ std::vector<int> PmergeMe::sort(std::vector<std::vector<int> > &temp)
 		main.insert(main.begin() + currentpos, target);
 		eklenti++;
 	}
-	for (size_t i = 0; i < RestVector.size(); i++)
-	{
-		int m = binarySearch(main, RestVector[i]);
-		main.insert(main.begin()+ m, RestVector[i]);
-	}
+	
+	std::cout << main.size() << std::endl;
 	return (main);
 }
 
@@ -418,22 +424,35 @@ std::vector<std::vector<int> > PmergeMe::mergeInsertPairs(std::vector<int> & tem
 			int m = binarySearch1(main, ss);
 			main.insert(main.begin() + m, ss);
 		}
+		//displayPairs(main);
 		return (main);
 	}
 	std::vector<std::vector<int> > a = divideArray(karisik[0]);
 	std::vector<std::vector<int> > b = divideArray(karisik[1]);
 	if (a.size() + b.size() == 4)
 	{
+		main.push_back(b);
+		main.push_back(a);
+		if (ss.size() >= a[0].size())
+		{
+			std::vector<int> z;
+			size_t elements_to_take = std::min(ss.size(), a[0].size());
+		}
+	}
+
+	if (a.size() + b.size() == 4)
+	{
 		main.push_back(b[1]);
 		main.push_back(b[0]);
 		main.push_back(a[0]);
+		displayArray(ss);
 		if (ss.size() >= a[0].size())
 		{
 			std::vector<int> z;
 			size_t elements_to_take = std::min(ss.size(), a[0].size());
 			z.insert(z.end(), ss.begin(), ss.begin() + elements_to_take);
 			ss.erase(ss.begin(), ss.begin() + elements_to_take);
-			
+			displayArray(z);
 			size_t insert_pos = binarySearch1(main, z);
 			main.insert(main.begin() + insert_pos, z);
 			if (ss.size() >= a[0].size())
@@ -455,6 +474,7 @@ std::vector<std::vector<int> > PmergeMe::mergeInsertPairs(std::vector<int> & tem
 	{
 		splitAndUpdate(main);
 		sortPairs(main);
+		//splayPair(main);
 	}
 	return (main);
 }
@@ -488,7 +508,7 @@ void PmergeMe::passArgs()
 		cikti = sort(sorted);
 	}
 	displayArray(cikti);
-	std::cout << "Final count of comparison : "<<this->counter << std::endl;
+	std::cout << "Comparisons: "<< this->counter << std::endl;
 }
 // DEQUE
 
@@ -946,8 +966,8 @@ void PmergeMe::passArgsD()
 		sorted = mergeInsertPairsD(mm);
 		cikti = sortD(sorted);
 	}
-	displayArrayD(cikti);
-	std::cout << "Final count of comparison : "<<this->counterD << std::endl;
+	//displayArrayD(cikti);
+	//std::cout << "Final count of comparison : "<<this->counterD << std::endl;
 }
 
 

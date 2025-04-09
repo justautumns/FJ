@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mehmeyil <mehmeyil@student.42vienna.com>   +#+  +:+       +#+        */
+/*   By: mehmeyil <mehmeyil@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 15:54:38 by mehmeyil          #+#    #+#             */
-/*   Updated: 2025/03/31 00:12:15 by mehmeyil         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:21:04 by mehmeyil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int main(int ac, char **av)
 				m++;
 			}
 			if (hasDuplicate(deneme) || hasDuplicate(aa))
-			throw std::runtime_error("The sequence you've provided has duplicates please re check and run");
+				throw std::runtime_error("The sequence you've provided has duplicates please re check and run");
 		std::cout << "Before: ";
 		for (size_t i = 0; i < deneme.size(); i++)
 			std::cout << deneme[i] << " ";
@@ -96,10 +96,7 @@ int main(int ac, char **av)
 		end = std::clock();
 		passingTime = static_cast<double>(end - start) / CLOCKS_PER_SEC;
 		std::cout << "Time to process a range of " << ac - 1 << " elements with std::vector " << passingTime * 1000000.0 << " us" << std::endl;
-		std::cout << "Before: ";
-		for (size_t i = 0; i < aa.size(); i++)
-			std::cout << aa[i] << " ";
-		std::cout << "\nAfter: ";
+		
 		start = std::clock();
 		x.passArgsD();
 		end = std::clock();
